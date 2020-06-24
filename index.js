@@ -39,3 +39,54 @@ function displayMenu() {
             "Quit"
         ]
         
+    }).then(function (userInput) {
+        switch (userInput.choice) {
+            case "View All Employees":
+                viewEmployees();
+                break;
+            case "View All Employees by Department":
+                viewByDepartments();
+                break;
+            case "View All Employees by Manager":
+                viewByManager();
+                break;
+            case "Add Employee":
+                addEmployee();
+                break;
+            case "Remove Employee":
+                removeEmployee();
+                break;
+            case "Update Employee Role":
+                updateEmployeeRole();
+                break;
+            case "Update Employee Manager":
+                updateEmployeeManager();
+                break;
+            case "View All Roles":
+                viewAllRoles();
+                break;
+            case "Add Role":
+                addRole();
+                break;
+            case "Remove Role":
+                removeRole();
+                break;
+            case "View All Departments":
+                viewAllDepartments();
+                break;
+            case "Add Department":
+                break;
+            case "Remove Department":
+                break;
+            case "Quit":
+                console.log("Goodbye!");
+                break;
+        };
+    });
+};
+function viewAllEmployees() {
+    connection.query("SELECT * FROM employee", function (err, results) {
+      console.table(results);
+      displayMenu();
+    })
+  }
