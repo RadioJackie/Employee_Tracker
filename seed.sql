@@ -5,7 +5,7 @@ CREATE DATABASE employee_trackerDB;
 USE employee_trackerDB;
 
 CREATE TABLE employee(
-id INT NOT NULL AUTO_INCREMENT,
+id INT NOT NULL,
 first_name VARCHAR (30) NOT NULL,
 last_name VARCHAR (30) NOT NULL,
 role_id INT,
@@ -28,7 +28,7 @@ VALUES
 SELECT * FROM employee;  
 
 CREATE TABLE employee_role(
-id INT NOT NULL AUTO_INCREMENT,
+id INT NOT NULL,
 title VARCHAR(30) NOT NULL,
 salary DECIMAL,
 department_id INT,
@@ -42,3 +42,17 @@ INSERT INTO employee_role (title, salary, department_id) values ('Accounting Lea
 INSERT INTO employee_role (title, salary, department_id) values ('Accountant', 125000, 3);
 INSERT INTO employee_role (title, salary, department_id) values ('Legal Team Lead', 150000, 4);
 INSERT INTO employee_role (title, salary, department_id) values ('Lawyer', 125000, 4);
+
+CREATE TABLE department(
+id INT NOT NULL,
+dept_name VARCHAR (30) NOT NULL,
+PRIMARY KEY (id)
+);
+INSERT INTO department (title) VALUES ('Sales')
+INSERT INTO department (title) VALUES ('Finance')
+INSERT INTO department (title) VALUES ('Engineering')
+INSERT INTO department (title) VALUES ('Legal')
+
+
+
+

@@ -6,8 +6,8 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "password",
-    database: "employee_tracker"
+    password: "Jackass21!",
+    database: "employee_trackerDB"
 });
 
 connection.connect(function (err) {
@@ -81,7 +81,7 @@ function displayMenu() {
                 removeDepartment();
                 break;
             case "Quit":
-                console.log("Bye");
+                console.log("Buh Bye");
                 break;
         };
     });
@@ -110,9 +110,19 @@ function viewAllRoles() {
         displayMenu();
     })
 }
+function  viewAllDepartments(){
+    let query = "SELECT * FROM department";
+    connection.query(query, function(error, res) {
+        if (err) throw err;
+        console.table(res);
+        displayMenu()
+    }
+    )
+};
 
 function addEmployee() {
-    inquirer.prompt({
+    let roleList = [];
+    let newEmployee = [
         {
             type: "input",
             message: "What is the Employee's first name?",
@@ -122,9 +132,39 @@ function addEmployee() {
             type: "input",
             message: "What is the Employee's last name?",
             name: "lastName"
-        }
-    
-    })};
+        },
+    ];
+    inquirer.prompt(newEmployee).then(function (response) {
+        connection.query("SELECT * FROM employee_role", function (err, results) {
+            if (err) throw err;
+            for (let index = 0; index < results.length; index++) {
+                roleList.push(results[index].title);
+            }
+            inquirer.prompt({
+                type: "list",
+                message: "Please select a Role for this Employee",
+                choices: roleList,
+                name: "newRole"
+            })
+                .then(function (userInput) {
+                    let roleId;
+                    connection.query("SELECT * FROM employee_role WHERE title = '" + userInput.newRole + "'", function (err, results) {
+                        if (err) throw err;
+                        roleId = results[0].id;
+                        let query = "INSERT INTO employee (first_name, last_name, role_id) VALUES ('" + response.firstName + "', '" + response.lastName + "', '" + roleId + "')";
+                        connection.query(query, function (err, results) {
+                            if (err) throw err;
+                            console.log("New Employee added");
+                            displayMenu();
+                        })
+                    })
+                })
+        });
+    });
+
+};
+
+
 function viewByDepartments() {
     inquirer.prompt([
         {
@@ -140,7 +180,27 @@ function viewByDepartments() {
         }
     ])
 };
+
 function addDepartment() {
+    let newDepartment = [
+        {
+            type: "input",
+            message: "What Depatment would you like to add?",
+            name: "dept"
+        }
+    ];
+    inquirer.prompt(newDepartment)
+        
+            .then(function (userInput) {
+                    let query = "INSERT INTO department (dept_name) VALUES ('" + userInput.departmentname + "')";
+                    connection.query(query, function (err, results) {
+                        if (err) throw err;
+                        console.log("New Department added");
+                        displayMenu();
+                    })
+                })
+            };
+    /*function addDepartment() {
     inquirer.prompt({
         type: "input",
         message: "What Depatment would you like to add?",
@@ -153,6 +213,8 @@ function addDepartment() {
         })
     })
 }
+*/
+
 function removeDepartment() {
     inquirer.prompt({
         type: "input",
