@@ -17,3 +17,4 @@ To install necessary dependencies, run the following command:
 ISC
 
 # Demo
+Employee_Tracker/img/Untitled_ Jun 28, 2020 5_33 PM.gif

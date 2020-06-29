@@ -119,7 +119,6 @@ function  viewAllDepartments(){
     }
     )
 };
-
 function addEmployee() {
     let roleList = [];
     let newEmployee = [
@@ -146,7 +145,7 @@ function addEmployee() {
                 choices: roleList,
                 name: "newRole"
             })
-                .then(function (userInput) {
+            .then(function (userInput) {
                     let roleId;
                     connection.query("SELECT * FROM employee_role WHERE title = '" + userInput.newRole + "'", function (err, results) {
                         if (err) throw err;
@@ -158,13 +157,10 @@ function addEmployee() {
                             displayMenu();
                         })
                     })
-                })
+            })
         });
     });
-
 };
-
-
 function viewByDepartments() {
     inquirer.prompt([
         {
@@ -190,7 +186,6 @@ function addDepartment() {
         }
     ];
     inquirer.prompt(newDepartment)
-        
             .then(function (userInput) {
                     let query = "INSERT INTO department (dept_name) VALUES ('" + userInput.departmentname + "')";
                     connection.query(query, function (err, results) {
@@ -200,21 +195,6 @@ function addDepartment() {
                     })
                 })
             };
-    /*function addDepartment() {
-    inquirer.prompt({
-        type: "input",
-        message: "What Depatment would you like to add?",
-        name: "dept"
-    }).then(function (answer) {
-        let query = "INSERT INTO department (dept_name) VALUES ('" + answer.dept + "')";
-        connection.query(query, function (err, results) {
-            console.log("New Department added");
-            displayMenu();
-        })
-    })
-}
-*/
-
 function removeDepartment() {
     inquirer.prompt({
         type: "input",
